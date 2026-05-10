@@ -13,6 +13,7 @@ Book Memo 是一个适合初学者阅读和练习的 React 小项目。它提供
 - Vite
 - CSS
 - localStorage
+- 中日英语言切换
 - GitHub Pages
 - GitHub Actions
 
@@ -71,8 +72,10 @@ https://atsuyoshijp-bit.github.io/react-ts-book-memo/
 - 新增 book memo
 - 编辑 book memo
 - 删除 book memo
-- 使用 localStorage 保存数据
-- 刷新页面后数据仍然保留
+- 使用 localStorage 保存 memo 数据
+- 中日英语言切换
+- 当前语言选择会保存到 localStorage，刷新页面后仍然保留
+- 刷新页面后 memo 数据仍然保留
 
 ## 主要文件
 
@@ -80,6 +83,7 @@ https://atsuyoshijp-bit.github.io/react-ts-book-memo/
 - `src/App.tsx`：Book Memo 主界面和功能逻辑
 - `src/App.css`：页面样式
 - `src/types.ts`：TypeScript 数据类型
+- `src/i18n.ts`：中日英 UI 翻译文案和语言类型
 - `vite.config.ts`：Vite 配置，包含 GitHub Pages 的 base 路径
 - `.github/workflows/deploy.yml`：GitHub Pages 自动部署流程
 - `README.md`：项目说明

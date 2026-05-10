@@ -1,8 +1,25 @@
 import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
+import { languageOptions, translations } from './i18n';
+import type { Language } from './i18n';
 import type { BookMemo } from './types';
 
 const STORAGE_KEY = 'book-memos';
+const LANGUAGE_STORAGE_KEY = 'book-memo-language';
+
+function isLanguage(value: string | null): value is Language {
+  return value === 'zh' || value === 'ja' || value === 'en';
+}
+
+function loadLanguage(): Language {
+  const savedLanguage = localStorage.getItem(LANGUAGE_STORAGE_KEY);
+
+  if (isLanguage(savedLanguage)) {
+    return savedLanguage;
+  }
+
+  return 'zh';
+}
 
 function loadBookMemos(): BookMemo[] {
   const savedMemos = localStorage.getItem(STORAGE_KEY);
@@ -16,16 +33,22 @@ function loadBookMemos(): BookMemo[] {
 
 function App() {
   const [bookMemos, setBookMemos] = useState<BookMemo[]>(loadBookMemos);
+  const [language, setLanguage] = useState<Language>(loadLanguage);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [note, setNote] = useState('');
 
   const isEditing = editingId !== null;
+  const t = translations[language];
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(bookMemos));
   }, [bookMemos]);
+
+  useEffect(() => {
+    localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
+  }, [language]);
 
   function resetForm() {
     setEditingId(null);
@@ -97,51 +120,66 @@ function App() {
   return (
     <main className="app">
       <section className="hero">
-        <p className="eyebrow">LocalStorage Book Memo</p>
-        <h1>Book Memo</h1>
-        <p className="description">
-          记录读过的书和简单笔记。数据保存在浏览器 localStorage 中，刷新页面后仍会保留。
-        </p>
+        <div className="language-switcher" aria-label={t.languageButtonLabel}>
+          <span>{t.languageLabel}</span>
+          <div className="language-buttons">
+            {languageOptions.map((option) => (
+              <button
+                className={option.code === language ? 'active' : ''}
+                key={option.code}
+                onClick={() => setLanguage(option.code)}
+                type="button"
+                aria-pressed={option.code === language}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <p className="eyebrow">{t.eyebrow}</p>
+        <h1>{t.appTitle}</h1>
+        <p className="description">{t.description}</p>
       </section>
 
       <section className="card">
-        <h2>{isEditing ? '编辑 Memo' : '新增 Memo'}</h2>
+        <h2>{isEditing ? t.editMemoTitle : t.addMemoTitle}</h2>
 
         <form className="memo-form" onSubmit={handleSubmit}>
           <label>
-            书名
+            {t.titleLabel}
             <input
               value={title}
               onChange={(event) => setTitle(event.target.value)}
-              placeholder="例如：小王子"
+              placeholder={t.titlePlaceholder}
             />
           </label>
 
           <label>
-            作者
+            {t.authorLabel}
             <input
               value={author}
               onChange={(event) => setAuthor(event.target.value)}
-              placeholder="例如：圣埃克苏佩里"
+              placeholder={t.authorPlaceholder}
             />
           </label>
 
           <label>
-            笔记
+            {t.noteLabel}
             <textarea
               value={note}
               onChange={(event) => setNote(event.target.value)}
-              placeholder="写下你的阅读感想"
+              placeholder={t.notePlaceholder}
               rows={4}
             />
           </label>
 
           <div className="form-actions">
-            <button type="submit">{isEditing ? '更新 Memo' : '保存 Memo'}</button>
+            <button type="submit">{isEditing ? t.updateMemo : t.saveMemo}</button>
 
             {isEditing && (
               <button className="secondary-button" type="button" onClick={handleCancelEdit}>
-                取消编辑
+                {t.cancelEdit}
               </button>
             )}
           </div>
@@ -150,12 +188,14 @@ function App() {
 
       <section className="card">
         <div className="list-header">
-          <h2>全部 Memos</h2>
-          <span>{bookMemos.length} 条</span>
+          <h2>{t.allMemos}</h2>
+          <span>
+            {bookMemos.length} {t.countUnit}
+          </span>
         </div>
 
         {bookMemos.length === 0 ? (
-          <p className="empty">还没有 memo，先新增一条吧。</p>
+          <p className="empty">{t.emptyMessage}</p>
         ) : (
           <ul className="memo-list">
             {bookMemos.map((bookMemo) => (
@@ -170,10 +210,10 @@ function App() {
 
                 <div className="memo-actions">
                   <button className="edit-button" onClick={() => handleEdit(bookMemo)}>
-                    编辑
+                    {t.edit}
                   </button>
                   <button className="delete-button" onClick={() => handleDelete(bookMemo.id)}>
-                    删除
+                    {t.delete}
                   </button>
                 </div>
               </li>
