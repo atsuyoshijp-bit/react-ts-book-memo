@@ -20,7 +20,7 @@ textarea {
 .app {
   width: min(920px, 100%);
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 32px 20px 40px;
 }
 
 .hero {
@@ -31,9 +31,9 @@ textarea {
 .language-switcher {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 12px;
-  margin-bottom: 22px;
+  margin-bottom: 24px;
   color: #4b5563;
   font-size: 14px;
   font-weight: 700;
@@ -256,7 +256,9 @@ h1 {
   }
 
   .language-switcher {
+    align-items: center;
     flex-direction: column;
+    justify-content: center;
   }
 
   .memo-item {
