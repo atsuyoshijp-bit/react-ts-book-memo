@@ -6,9 +6,22 @@ import type { BookMemo } from './types';
 
 const STORAGE_KEY = 'book-memos';
 const LANGUAGE_STORAGE_KEY = 'book-memo-language';
+const THEME_STORAGE_KEY = 'book-memo-theme';
+
+type ThemeMode = 'light' | 'dark' | 'auto';
+
+const themeOptions: Array<{ code: ThemeMode; label: string; ariaLabel: string }> = [
+  { code: 'light', label: '☀︎', ariaLabel: 'Light theme' },
+  { code: 'dark', label: '🌙', ariaLabel: 'Dark theme' },
+  { code: 'auto', label: 'A', ariaLabel: 'Auto theme' },
+];
 
 function isLanguage(value: string | null): value is Language {
   return value === 'zh' || value === 'ja' || value === 'en';
+}
+
+function isThemeMode(value: string | null): value is ThemeMode {
+  return value === 'light' || value === 'dark' || value === 'auto';
 }
 
 function loadLanguage(): Language {
@@ -19,6 +32,24 @@ function loadLanguage(): Language {
   }
 
   return 'zh';
+}
+
+function loadThemeMode(): ThemeMode {
+  const savedThemeMode = localStorage.getItem(THEME_STORAGE_KEY);
+
+  if (isThemeMode(savedThemeMode)) {
+    return savedThemeMode;
+  }
+
+  return 'auto';
+}
+
+function getSystemTheme(): 'light' | 'dark' {
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    return 'dark';
+  }
+
+  return 'light';
 }
 
 function loadBookMemos(): BookMemo[] {
@@ -34,12 +65,15 @@ function loadBookMemos(): BookMemo[] {
 function App() {
   const [bookMemos, setBookMemos] = useState<BookMemo[]>(loadBookMemos);
   const [language, setLanguage] = useState<Language>(loadLanguage);
+  const [themeMode, setThemeMode] = useState<ThemeMode>(loadThemeMode);
+  const [systemTheme, setSystemTheme] = useState<'light' | 'dark'>(getSystemTheme);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [note, setNote] = useState('');
 
   const isEditing = editingId !== null;
+  const selectedTheme = themeMode === 'auto' ? systemTheme : themeMode;
   const t = translations[language];
 
   useEffect(() => {
@@ -49,6 +83,28 @@ function App() {
   useEffect(() => {
     localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
   }, [language]);
+
+  useEffect(() => {
+    localStorage.setItem(THEME_STORAGE_KEY, themeMode);
+  }, [themeMode]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    function handleSystemThemeChange(event: MediaQueryListEvent) {
+      setSystemTheme(event.matches ? 'dark' : 'light');
+    }
+
+    mediaQuery.addEventListener('change', handleSystemThemeChange);
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleSystemThemeChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = selectedTheme;
+  }, [selectedTheme]);
 
   function resetForm() {
     setEditingId(null);
@@ -120,16 +176,33 @@ function App() {
   return (
     <main className="app">
       <section className="hero">
-        <div className="language-switcher" aria-label={t.languageButtonLabel}>
-          <span>{t.languageLabel}</span>
-          <div className="language-buttons">
+        <div className="top-tools">
+          <div className="tool-group language-switcher" aria-label={t.languageButtonLabel}>
             {languageOptions.map((option) => (
               <button
-                className={option.code === language ? 'active' : ''}
+                aria-label={option.ariaLabel}
+                aria-pressed={option.code === language}
+                className={option.code === language ? 'tool-button active' : 'tool-button'}
                 key={option.code}
                 onClick={() => setLanguage(option.code)}
+                title={option.ariaLabel}
                 type="button"
-                aria-pressed={option.code === language}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="tool-group theme-switcher" aria-label="Theme switcher">
+            {themeOptions.map((option) => (
+              <button
+                aria-label={option.ariaLabel}
+                aria-pressed={option.code === themeMode}
+                className={option.code === themeMode ? 'tool-button active' : 'tool-button'}
+                key={option.code}
+                onClick={() => setThemeMode(option.code)}
+                title={option.ariaLabel}
+                type="button"
               >
                 {option.label}
               </button>

@@ -1,9 +1,9 @@
 export type Language = 'zh' | 'ja' | 'en';
 
-export const languageOptions: Array<{ code: Language; label: string }> = [
-  { code: 'zh', label: '中文' },
-  { code: 'ja', label: '日本語' },
-  { code: 'en', label: 'English' },
+export const languageOptions: Array<{ code: Language; label: string; ariaLabel: string }> = [
+  { code: 'zh', label: '中', ariaLabel: '中文' },
+  { code: 'ja', label: '日', ariaLabel: '日本語' },
+  { code: 'en', label: 'EN', ariaLabel: 'English' },
 ];
 
 export const translations = {

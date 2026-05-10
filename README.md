@@ -74,7 +74,8 @@ https://atsuyoshijp-bit.github.io/react-ts-book-memo/
 - 删除 book memo
 - 使用 localStorage 保存 memo 数据
 - 中日英语言切换
-- 当前语言选择会保存到 localStorage，刷新页面后仍然保留
+- 浅色 / 深色 / 自动主题切换
+- 当前语言和主题选择会保存到 localStorage，刷新页面后仍然保留
 - 刷新页面后 memo 数据仍然保留
 
 ## 主要文件
