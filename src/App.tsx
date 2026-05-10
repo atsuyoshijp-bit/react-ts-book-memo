@@ -16,37 +16,82 @@ function loadBookMemos(): BookMemo[] {
 
 function App() {
   const [bookMemos, setBookMemos] = useState<BookMemo[]>(loadBookMemos);
+  const [editingId, setEditingId] = useState<number | null>(null);
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [note, setNote] = useState('');
+
+  const isEditing = editingId !== null;
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(bookMemos));
   }, [bookMemos]);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const newBookMemo: BookMemo = {
-      id: Date.now(),
-      title: title.trim(),
-      author: author.trim(),
-      note: note.trim(),
-      createdAt: new Date().toLocaleString(),
-    };
-
-    if (!newBookMemo.title || !newBookMemo.author || !newBookMemo.note) {
-      return;
-    }
-
-    setBookMemos([newBookMemo, ...bookMemos]);
+  function resetForm() {
+    setEditingId(null);
     setTitle('');
     setAuthor('');
     setNote('');
   }
 
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const trimmedTitle = title.trim();
+    const trimmedAuthor = author.trim();
+    const trimmedNote = note.trim();
+
+    if (!trimmedTitle || !trimmedAuthor || !trimmedNote) {
+      return;
+    }
+
+    if (isEditing) {
+      setBookMemos(
+        bookMemos.map((bookMemo) => {
+          if (bookMemo.id !== editingId) {
+            return bookMemo;
+          }
+
+          return {
+            ...bookMemo,
+            title: trimmedTitle,
+            author: trimmedAuthor,
+            note: trimmedNote,
+          };
+        }),
+      );
+    } else {
+      const newBookMemo: BookMemo = {
+        id: Date.now(),
+        title: trimmedTitle,
+        author: trimmedAuthor,
+        note: trimmedNote,
+        createdAt: new Date().toLocaleString(),
+      };
+
+      setBookMemos([newBookMemo, ...bookMemos]);
+    }
+
+    resetForm();
+  }
+
+  function handleEdit(bookMemo: BookMemo) {
+    setEditingId(bookMemo.id);
+    setTitle(bookMemo.title);
+    setAuthor(bookMemo.author);
+    setNote(bookMemo.note);
+  }
+
+  function handleCancelEdit() {
+    resetForm();
+  }
+
   function handleDelete(id: number) {
     setBookMemos(bookMemos.filter((bookMemo) => bookMemo.id !== id));
+
+    if (editingId === id) {
+      resetForm();
+    }
   }
 
   return (
@@ -60,7 +105,8 @@ function App() {
       </section>
 
       <section className="card">
-        <h2>新增 Memo</h2>
+        <h2>{isEditing ? '编辑 Memo' : '新增 Memo'}</h2>
+
         <form className="memo-form" onSubmit={handleSubmit}>
           <label>
             书名
@@ -90,7 +136,15 @@ function App() {
             />
           </label>
 
-          <button type="submit">保存 Memo</button>
+          <div className="form-actions">
+            <button type="submit">{isEditing ? '更新 Memo' : '保存 Memo'}</button>
+
+            {isEditing && (
+              <button className="secondary-button" type="button" onClick={handleCancelEdit}>
+                取消编辑
+              </button>
+            )}
+          </div>
         </form>
       </section>
 
@@ -113,9 +167,15 @@ function App() {
                   </p>
                   <p>{bookMemo.note}</p>
                 </div>
-                <button className="delete-button" onClick={() => handleDelete(bookMemo.id)}>
-                  删除
-                </button>
+
+                <div className="memo-actions">
+                  <button className="edit-button" onClick={() => handleEdit(bookMemo)}>
+                    编辑
+                  </button>
+                  <button className="delete-button" onClick={() => handleDelete(bookMemo.id)}>
+                    删除
+                  </button>
+                </div>
               </li>
             ))}
           </ul>

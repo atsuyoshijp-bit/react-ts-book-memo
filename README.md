@@ -46,6 +46,7 @@ npm run build
 
 - 显示所有 book memos
 - 新增 book memo
+- 编辑 book memo
 - 删除 book memo
 - 使用 localStorage 保存数据
 - 刷新页面后数据仍然保留

@@ -91,11 +91,18 @@ h1 {
 }
 
 .memo-form button,
+.edit-button,
 .delete-button {
   border: 0;
   border-radius: 10px;
   cursor: pointer;
   font-weight: 700;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .memo-form button {
@@ -106,6 +113,15 @@ h1 {
 
 .memo-form button:hover {
   background: #1d4ed8;
+}
+
+.memo-form .secondary-button {
+  color: #374151;
+  background: #e5e7eb;
+}
+
+.memo-form .secondary-button:hover {
+  background: #d1d5db;
 }
 
 .list-header {
@@ -158,9 +174,27 @@ h1 {
   font-size: 14px;
 }
 
-.delete-button {
+.memo-actions {
+  display: flex;
   flex: 0 0 auto;
+  gap: 8px;
+}
+
+.edit-button,
+.delete-button {
   padding: 8px 12px;
+}
+
+.edit-button {
+  color: #1d4ed8;
+  background: #dbeafe;
+}
+
+.edit-button:hover {
+  background: #bfdbfe;
+}
+
+.delete-button {
   color: #b91c1c;
   background: #fee2e2;
 }
@@ -184,5 +218,9 @@ h1 {
 
   .memo-item {
     flex-direction: column;
+  }
+
+  .memo-actions {
+    width: 100%;
   }
 }
