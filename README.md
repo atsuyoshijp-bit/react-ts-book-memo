@@ -4,11 +4,7 @@
 
 ## 项目概要
 
-<<<<<<< codex/create-react-vite-typescript-book-memo-project-o3mqyi
 Book Memo 是一个适合初学者阅读和练习的 React 小项目。它提供新增、编辑、显示和删除读书笔记的功能，代码结构尽量保持简单清晰。当前 UI 使用 Tailwind CSS 风格的设计令牌和 shadcn/ui 组件结构重构，表单、卡片、按钮和输入框更统一。
-=======
-Book Memo 是一个适合初学者阅读和练习的 React 小项目。它提供新增、编辑、显示和删除读书笔记的功能，代码结构尽量保持简单清晰。
->>>>>>> main
 
 ## 使用技术
 
@@ -16,11 +12,8 @@ Book Memo 是一个适合初学者阅读和练习的 React 小项目。它提供
 - TypeScript
 - Vite
 - CSS
-<<<<<<< codex/create-react-vite-typescript-book-memo-project-o3mqyi
 - Tailwind CSS
 - shadcn/ui
-=======
->>>>>>> main
 - localStorage
 - 中日英语言切换
 - GitHub Pages
@@ -54,7 +47,6 @@ npm run build
 
 构建产物会生成在 `dist` 目录中。
 
-<<<<<<< codex/create-react-vite-typescript-book-memo-project-o3mqyi
 ## UI 说明
 
 主要 UI 已拆分为 shadcn/ui 风格组件：
@@ -65,8 +57,6 @@ npm run build
 - `Textarea`：笔记输入框
 - `Label`：表单字段标签
 
-=======
->>>>>>> main
 ## GitHub Pages 部署说明
 
 本项目已经配置 GitHub Pages 自动部署：
@@ -104,7 +94,6 @@ https://atsuyoshijp-bit.github.io/react-ts-book-memo/
 
 - `src/main.tsx`：React 应用入口
 - `src/App.tsx`：Book Memo 主界面和功能逻辑
-<<<<<<< codex/create-react-vite-typescript-book-memo-project-o3mqyi
 - `src/App.css`：Tailwind / shadcn UI 全局样式和设计令牌
 - `src/components/ui/`：shadcn/ui 风格基础组件
 - `src/lib/utils.ts`：组件 className 工具函数
@@ -112,12 +101,6 @@ https://atsuyoshijp-bit.github.io/react-ts-book-memo/
 - `src/i18n.ts`：中日英 UI 翻译文案和语言类型
 - `vite.config.ts`：Vite 配置，包含 GitHub Pages 的 base 路径和 Tailwind 插件
 - `components.json`：shadcn/ui 配置
-=======
-- `src/App.css`：页面样式
-- `src/types.ts`：TypeScript 数据类型
-- `src/i18n.ts`：中日英 UI 翻译文案和语言类型
-- `vite.config.ts`：Vite 配置，包含 GitHub Pages 的 base 路径
->>>>>>> main
 - `.github/workflows/deploy.yml`：GitHub Pages 自动部署流程
 - `README.md`：项目说明
 - `AGENTS.md`：仓库协作说明
