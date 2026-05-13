@@ -233,6 +233,7 @@ function App() {
         <CardHeader>
           <CardTitle>{isEditing ? t.editMemoTitle : t.addMemoTitle}</CardTitle>
         </CardHeader>
+
         <CardContent>
           <form className="memo-form" onSubmit={handleSubmit}>
             <div className="form-field">
@@ -288,6 +289,7 @@ function App() {
             </CardDescription>
           </div>
         </CardHeader>
+
         <CardContent>
           {bookMemos.length === 0 ? (
             <p className="empty-message">{t.emptyMessage}</p>
@@ -313,6 +315,7 @@ function App() {
                         >
                           {t.edit}
                         </Button>
+
                         <Button
                           variant="destructive"
                           size="sm"
