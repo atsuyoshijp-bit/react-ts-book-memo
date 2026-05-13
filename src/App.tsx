@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
+<<<<<<< codex/create-react-vite-typescript-book-memo-project-o3mqyi
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+=======
+>>>>>>> main
 import { languageOptions, translations } from './i18n';
 import type { Language } from './i18n';
 import type { BookMemo } from './types';
@@ -109,7 +112,10 @@ function App() {
 
   useEffect(() => {
     document.documentElement.dataset.theme = selectedTheme;
+<<<<<<< codex/create-react-vite-typescript-book-memo-project-o3mqyi
     document.documentElement.classList.toggle('dark', selectedTheme === 'dark');
+=======
+>>>>>>> main
   }, [selectedTheme]);
 
   function resetForm() {
@@ -180,6 +186,7 @@ function App() {
   }
 
   return (
+<<<<<<< codex/create-react-vite-typescript-book-memo-project-o3mqyi
     <main className="app-shell">
       <section className="hero-section">
         <div className="top-tools">
@@ -214,11 +221,46 @@ function App() {
               >
                 {option.label}
               </Button>
+=======
+    <main className="app">
+      <section className="hero">
+        <div className="top-tools">
+          <div className="tool-group language-switcher" aria-label={t.languageButtonLabel}>
+            {languageOptions.map((option) => (
+              <button
+                aria-label={option.ariaLabel}
+                aria-pressed={option.code === language}
+                className={option.code === language ? 'tool-button active' : 'tool-button'}
+                key={option.code}
+                onClick={() => setLanguage(option.code)}
+                title={option.ariaLabel}
+                type="button"
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="tool-group theme-switcher" aria-label="Theme switcher">
+            {themeOptions.map((option) => (
+              <button
+                aria-label={option.ariaLabel}
+                aria-pressed={option.code === themeMode}
+                className={option.code === themeMode ? 'tool-button active' : 'tool-button'}
+                key={option.code}
+                onClick={() => setThemeMode(option.code)}
+                title={option.ariaLabel}
+                type="button"
+              >
+                {option.label}
+              </button>
+>>>>>>> main
             ))}
           </div>
         </div>
 
         <p className="eyebrow">{t.eyebrow}</p>
+<<<<<<< codex/create-react-vite-typescript-book-memo-project-o3mqyi
         <h1 className="page-title">{t.appTitle}</h1>
         <p className="page-description">{t.description}</p>
       </section>
@@ -315,6 +357,91 @@ function App() {
           )}
         </CardContent>
       </Card>
+=======
+        <h1>{t.appTitle}</h1>
+        <p className="description">{t.description}</p>
+      </section>
+
+      <section className="card">
+        <h2>{isEditing ? t.editMemoTitle : t.addMemoTitle}</h2>
+
+        <form className="memo-form" onSubmit={handleSubmit}>
+          <label>
+            {t.titleLabel}
+            <input
+              value={title}
+              onChange={(event) => setTitle(event.target.value)}
+              placeholder={t.titlePlaceholder}
+            />
+          </label>
+
+          <label>
+            {t.authorLabel}
+            <input
+              value={author}
+              onChange={(event) => setAuthor(event.target.value)}
+              placeholder={t.authorPlaceholder}
+            />
+          </label>
+
+          <label>
+            {t.noteLabel}
+            <textarea
+              value={note}
+              onChange={(event) => setNote(event.target.value)}
+              placeholder={t.notePlaceholder}
+              rows={4}
+            />
+          </label>
+
+          <div className="form-actions">
+            <button type="submit">{isEditing ? t.updateMemo : t.saveMemo}</button>
+
+            {isEditing && (
+              <button className="secondary-button" type="button" onClick={handleCancelEdit}>
+                {t.cancelEdit}
+              </button>
+            )}
+          </div>
+        </form>
+      </section>
+
+      <section className="card">
+        <div className="list-header">
+          <h2>{t.allMemos}</h2>
+          <span>
+            {bookMemos.length} {t.countUnit}
+          </span>
+        </div>
+
+        {bookMemos.length === 0 ? (
+          <p className="empty">{t.emptyMessage}</p>
+        ) : (
+          <ul className="memo-list">
+            {bookMemos.map((bookMemo) => (
+              <li className="memo-item" key={bookMemo.id}>
+                <div>
+                  <h3>{bookMemo.title}</h3>
+                  <p className="meta">
+                    {bookMemo.author} · {bookMemo.createdAt}
+                  </p>
+                  <p>{bookMemo.note}</p>
+                </div>
+
+                <div className="memo-actions">
+                  <button className="edit-button" onClick={() => handleEdit(bookMemo)}>
+                    {t.edit}
+                  </button>
+                  <button className="delete-button" onClick={() => handleDelete(bookMemo.id)}>
+                    {t.delete}
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+>>>>>>> main
     </main>
   );
 }

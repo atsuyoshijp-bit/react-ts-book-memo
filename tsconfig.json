@@ -18,12 +18,16 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+<<<<<<< codex/create-react-vite-typescript-book-memo-project-o3mqyi
     "jsx": "react-jsx",
     "paths": {
       "@/*": [
         "./src/*"
       ]
     }
+=======
+    "jsx": "react-jsx"
+>>>>>>> main
   },
   "include": [
     "src"
