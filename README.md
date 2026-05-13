@@ -95,6 +95,7 @@ https://atsuyoshijp-bit.github.io/react-ts-book-memo/
 - `src/main.tsx`：React 应用入口
 - `src/App.tsx`：Book Memo 主界面和功能逻辑
 - `src/App.css`：Tailwind / shadcn UI 全局样式和设计令牌
+- `src/components/`：页面业务组件，例如 Header、表单、列表、空状态和统计卡片
 - `src/components/ui/`：shadcn/ui 风格基础组件
 - `src/lib/utils.ts`：组件 className 工具函数
 - `src/types.ts`：TypeScript 数据类型
