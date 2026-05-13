@@ -1,5 +1,13 @@
 import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
+<<<<<<< codex/create-react-vite-typescript-book-memo-project-o3mqyi
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+=======
+>>>>>>> main
 import { languageOptions, translations } from './i18n';
 import type { Language } from './i18n';
 import type { BookMemo } from './types';
@@ -104,6 +112,10 @@ function App() {
 
   useEffect(() => {
     document.documentElement.dataset.theme = selectedTheme;
+<<<<<<< codex/create-react-vite-typescript-book-memo-project-o3mqyi
+    document.documentElement.classList.toggle('dark', selectedTheme === 'dark');
+=======
+>>>>>>> main
   }, [selectedTheme]);
 
   function resetForm() {
@@ -174,6 +186,42 @@ function App() {
   }
 
   return (
+<<<<<<< codex/create-react-vite-typescript-book-memo-project-o3mqyi
+    <main className="app-shell">
+      <section className="hero-section">
+        <div className="top-tools">
+          <div className="tool-group" aria-label={t.languageButtonLabel}>
+            {languageOptions.map((option) => (
+              <Button
+                aria-label={option.ariaLabel}
+                aria-pressed={option.code === language}
+                key={option.code}
+                onClick={() => setLanguage(option.code)}
+                size="icon"
+                title={option.ariaLabel}
+                type="button"
+                variant={option.code === language ? 'default' : 'outline'}
+              >
+                {option.label}
+              </Button>
+            ))}
+          </div>
+
+          <div className="tool-group" aria-label="Theme switcher">
+            {themeOptions.map((option) => (
+              <Button
+                aria-label={option.ariaLabel}
+                aria-pressed={option.code === themeMode}
+                key={option.code}
+                onClick={() => setThemeMode(option.code)}
+                size="icon"
+                title={option.ariaLabel}
+                type="button"
+                variant={option.code === themeMode ? 'default' : 'outline'}
+              >
+                {option.label}
+              </Button>
+=======
     <main className="app">
       <section className="hero">
         <div className="top-tools">
@@ -206,11 +254,110 @@ function App() {
               >
                 {option.label}
               </button>
+>>>>>>> main
             ))}
           </div>
         </div>
 
         <p className="eyebrow">{t.eyebrow}</p>
+<<<<<<< codex/create-react-vite-typescript-book-memo-project-o3mqyi
+        <h1 className="page-title">{t.appTitle}</h1>
+        <p className="page-description">{t.description}</p>
+      </section>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>{isEditing ? t.editMemoTitle : t.addMemoTitle}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form className="memo-form" onSubmit={handleSubmit}>
+            <div className="form-field">
+              <Label htmlFor="book-title">{t.titleLabel}</Label>
+              <Input
+                id="book-title"
+                value={title}
+                onChange={(event) => setTitle(event.target.value)}
+                placeholder={t.titlePlaceholder}
+              />
+            </div>
+
+            <div className="form-field">
+              <Label htmlFor="book-author">{t.authorLabel}</Label>
+              <Input
+                id="book-author"
+                value={author}
+                onChange={(event) => setAuthor(event.target.value)}
+                placeholder={t.authorPlaceholder}
+              />
+            </div>
+
+            <div className="form-field">
+              <Label htmlFor="book-note">{t.noteLabel}</Label>
+              <Textarea
+                id="book-note"
+                value={note}
+                onChange={(event) => setNote(event.target.value)}
+                placeholder={t.notePlaceholder}
+                rows={4}
+              />
+            </div>
+
+            <div className="form-actions">
+              <Button type="submit">{isEditing ? t.updateMemo : t.saveMemo}</Button>
+
+              {isEditing && (
+                <Button type="button" variant="secondary" onClick={handleCancelEdit}>
+                  {t.cancelEdit}
+                </Button>
+              )}
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader className="memo-list-header">
+          <div>
+            <CardTitle>{t.allMemos}</CardTitle>
+            <CardDescription>
+              {bookMemos.length} {t.countUnit}
+            </CardDescription>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {bookMemos.length === 0 ? (
+            <p className="empty-message">{t.emptyMessage}</p>
+          ) : (
+            <ul className="memo-list">
+              {bookMemos.map((bookMemo) => (
+                <li key={bookMemo.id}>
+                  <Card className="memo-card">
+                    <CardContent className="memo-card-content">
+                      <div>
+                        <h3 className="memo-title">{bookMemo.title}</h3>
+                        <p className="memo-meta">
+                          {bookMemo.author} · {bookMemo.createdAt}
+                        </p>
+                        <p className="memo-note">{bookMemo.note}</p>
+                      </div>
+
+                      <div className="memo-actions">
+                        <Button variant="secondary" size="sm" onClick={() => handleEdit(bookMemo)}>
+                          {t.edit}
+                        </Button>
+                        <Button variant="destructive" size="sm" onClick={() => handleDelete(bookMemo.id)}>
+                          {t.delete}
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </li>
+              ))}
+            </ul>
+          )}
+        </CardContent>
+      </Card>
+=======
         <h1>{t.appTitle}</h1>
         <p className="description">{t.description}</p>
       </section>
@@ -294,6 +441,7 @@ function App() {
           </ul>
         )}
       </section>
+>>>>>>> main
     </main>
   );
 }

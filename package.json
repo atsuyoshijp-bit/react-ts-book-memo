@@ -16,6 +16,8 @@
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "typescript": "^5.4.5",
-    "vite": "^5.2.0"
+    "vite": "^5.2.0",
+    "@tailwindcss/vite": "file:vendor/@tailwindcss/vite",
+    "tailwindcss": "file:vendor/tailwindcss"
   }
 }
