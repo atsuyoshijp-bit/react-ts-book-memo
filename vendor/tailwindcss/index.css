@@ -1,0 +1,2 @@
+/* Local Tailwind CSS entry used by the Vite build in this offline environment. */
+@layer base, components, utilities;
