@@ -1,0 +1,9 @@
+{
+  "name": "tailwindcss",
+  "version": "4.0.0-local",
+  "private": true,
+  "exports": {
+    ".": "./index.css",
+    "./package.json": "./package.json"
+  }
+}
